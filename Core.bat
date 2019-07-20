@@ -18,7 +18,7 @@ call:config
 call:init %0
 goto:menu
 :config
-set address=https://h5mcbox.github.io
+set address=https://h5mcbox.github.io/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
