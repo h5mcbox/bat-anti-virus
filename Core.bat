@@ -18,7 +18,7 @@ call:config
 call:init %0
 goto:menu
 :config
-set address=https://h5mcbox.github.io/bat-anti-virus
+set address=https://h5mcbox.github.io
 set maxload=9
 set loaded=0
 set loadname=init
@@ -67,11 +67,12 @@ if "%address%"=="no" echo 不可更新!&pause&goto menu
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
+del ver.lib
 if /i %netver% gtr %localver% (
 cls&echo 下载中……
 certutil -urlcache * delete >nul
 cls&echo 下载中……
-echo off >exitreadonly
+echo runoff >exitreadonly
 cls&echo 下载中……
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
 cls&echo 下载中……
