@@ -23,7 +23,7 @@ set address=https://h5mcbox.github.io/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=0
+set localver=1
 goto:eof
 :init
 color f9
@@ -65,6 +65,7 @@ if exist "exitreadonly" del exitreadonly&attrib -s -r Core.bat&attrib -s -r sha2
 goto ro
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
+echo 检查更新中……
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
