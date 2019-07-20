@@ -13,6 +13,7 @@ if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
 Setlocal enabledelayedexpansion
+if "%1"=="updated-1" goto updated1
 if "%1"=="ro" goto ro
 call:config
 call:init %0
@@ -60,26 +61,22 @@ title Bat Anti Virus只读服务
 echo Bat Anti Virus只读服务
 attrib +s +r %0
 if exist "sha256.lib" attrib +s +r sha256.lib
-if exist "exitreadonly" del exitreadonly&exit
+if exist "exitreadonly" del exitreadonly&attrib -s -r Core.bat&attrib -s -r sha256.lib&exit
 goto ro
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
-echo 检查更新中……
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
-del ver.lib
 if /i %netver% gtr %localver% (
-cls&echo 下载中……
+cls&echo 清除缓存……
 certutil -urlcache * delete >nul
-cls&echo 下载中……
+cls&echo 退出只读……
 echo runoff >exitreadonly
-cls&echo 下载中……
-attrib -s -r %0&attrib -s -r sha256.lib
-cls&echo 下载中……
+cls&echo 下载sha256.lib中……
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
-cls&echo 下载中……
-certutil -urlcache -f %address%/Core.bat Core.bat&cls&echo 请重启此程序!&pause&exit
+cls&echo 下载Core并继续……
+certutil -urlcache -f %address%/Core.bat updatecore.bat&start "" updatecore.bat updated-1&exit
 )
 echo 不需要更新!
 pause
@@ -130,3 +127,7 @@ if "%hashfind%"=="true" del %file%
 echo 查杀完成！
 pause
 goto selectkill
+:updated1
+copy Core.bat backupcore.bat
+copy %0 Core.bat
+del %0&Core.bat
