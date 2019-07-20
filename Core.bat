@@ -70,6 +70,7 @@ echo 检查更新中……
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
+del ver.lib
 if /i %netver% gtr %localver% (
 cls&echo 清除缓存……
 certutil -urlcache * delete >nul
