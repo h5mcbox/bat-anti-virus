@@ -129,6 +129,5 @@ echo ≤È…±ÕÍ≥…£°
 pause
 goto selectkill
 :updated1
-copy Core.bat backupcore.bat
 copy %0 Core.bat
 del %0&Core.bat
