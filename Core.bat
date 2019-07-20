@@ -64,6 +64,7 @@ if exist "exitreadonly" del exitreadonly&exit
 goto ro
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
+echo 检查更新中……
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
