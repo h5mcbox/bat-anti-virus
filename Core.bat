@@ -32,7 +32,7 @@ start /min "" %1 ro
 goto:eof
 :menu
 cls
-title Bat Anti Virus
+title Bat Anti Virus By H503mc
 echo Bat Anti Virus
 set select=
 echo 1、查杀指定路径 2、更新
