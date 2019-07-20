@@ -12,7 +12,6 @@ exit /B
 if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
-echo runoff >exitreadonly
 Setlocal enabledelayedexpansion
 if "%1"=="updated-1" goto updated1
 if "%1"=="ro" goto ro
