@@ -18,7 +18,7 @@ call:config
 call:init %0
 goto:menu
 :config
-set address=https://h5mcbox.github.io
+set address=https://h5mcbox.github.io/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
@@ -79,6 +79,7 @@ cls&echo 下载中……
 certutil -urlcache -f %address%/updatecore.bat Core.bat&cls&echo 请重启此程序!&pause&exit
 )
 echo 不需要更新!
+pause
 goto menu
 exit
 :textsha256
