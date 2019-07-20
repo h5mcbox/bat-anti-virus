@@ -57,8 +57,9 @@ pause
 goto selectkill
 :ro
 cls
+color f9
 title Bat Anti Virus只读服务
-echo Bat Anti Virus只读服务
+echo Bat Anti Virus只读服务(防止Core.bat被更改)
 attrib +s +r %0
 if exist "sha256.lib" attrib +s +r sha256.lib
 if exist "exitreadonly" del exitreadonly&attrib -s -r Core.bat&attrib -s -r sha256.lib&exit
