@@ -77,7 +77,7 @@ echo runoff >exitreadonly
 cls&echo 下载中……
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
 cls&echo 下载中……
-certutil -urlcache -f %address%/updatecore.bat Core.bat&cls&echo 请重启此程序!&pause&exit
+certutil -urlcache -f %address%/Core.bat Core.bat&cls&echo 请重启此程序!&pause&exit
 )
 echo 不需要更新!
 pause
