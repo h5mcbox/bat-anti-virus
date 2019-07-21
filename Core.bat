@@ -14,22 +14,25 @@ pushd "%CD%"
 CD /D "%~dp0"
 Setlocal enabledelayedexpansion
 if "%1"=="updated-1" goto updated1
-if "%1"=="ro" goto ro
+if "%1"=="ro" goto ros
 call:config
 call:init %0
-goto:menu
+goto:menus
 :config
 set address=https://h5mcbox.github.io/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=2
+set localver=3
 goto:eof
 :init
 color f9
 echo Bat Anti Virus
 start /min "" %1 ro
 goto:eof
+:menus
+if not exist ropid.lib goto menus
+if exist ropid.lib set /p ropid=<ropid.lib&del ropid.lib
 :menu
 cls
 title Bat Anti Virus %localver% By H503mc
@@ -55,6 +58,9 @@ if "%selecta%"=="3" goto menu
 echo 请重新选择!
 pause
 goto selectkill
+:ros
+call:getpid
+echo %pid% >ropid.lib
 :ro
 cls
 color f9
@@ -62,7 +68,6 @@ title Bat Anti Virus只读服务
 echo Bat Anti Virus只读服务(防止Core.bat被更改)
 attrib +s +r %0
 if exist "sha256.lib" attrib +s +r sha256.lib
-if exist "exitreadonly" del exitreadonly&attrib -s -r Core.bat&attrib -s -r sha256.lib&exit
 goto ro
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
@@ -75,7 +80,8 @@ if /i %netver% gtr %localver% (
 cls&echo 清除缓存……
 certutil -urlcache * delete >nul
 cls&echo 退出只读……
-echo runoff >exitreadonly
+taskkill /f /pid %ropid% >nul 2>nul
+attrib -s -r Core.bat&attrib -s -r sha256.lib
 cls&echo 下载sha256.lib中……
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
 cls&echo 下载Core……
@@ -132,6 +138,12 @@ if "%hashfind%"=="true" del %file%
 echo 查杀完成！
 pause
 goto selectkill
+:getpid
+set TempFile=%TEMP%\sthUnique.tmp
+wmic process where (Name="wmic.exe" AND CommandLine LIKE "%%%TIME%%%") get ParentProcessId /value | find "ParentProcessId" >%TempFile%
+set /P _string=<%TempFile%
+set pid=%_string:~16%
+goto:eof
 :updated1
 copy %0 Core.bat
 del %0&Core.bat
