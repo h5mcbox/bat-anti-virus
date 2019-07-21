@@ -23,7 +23,7 @@ set address=https://h5mcbox.github.io/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=1
+set localver=2
 goto:eof
 :init
 color f9
@@ -32,7 +32,7 @@ start /min "" %1 ro
 goto:eof
 :menu
 cls
-title Bat Anti Virus By H503mc
+title Bat Anti Virus %localver% By H503mc
 echo Bat Anti Virus
 set select=
 echo 1、查杀指定路径 2、更新
@@ -78,8 +78,10 @@ cls&echo 退出只读……
 echo runoff >exitreadonly
 cls&echo 下载sha256.lib中……
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
-cls&echo 下载Core并继续……
-certutil -urlcache -f %address%/Core.bat updatecore.bat&start "" updatecore.bat updated-1&exit
+cls&echo 下载Core……
+certutil -urlcache -f %address%/Core.bat updatecore.bat >nul
+cls&echo 继续……
+start "" updatecore.bat updated-1&exit
 )
 echo 不需要更新!
 pause
