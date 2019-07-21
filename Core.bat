@@ -33,7 +33,7 @@ goto:eof
 :menu
 cls
 title Bat Anti Virus %localver% By H503mc
-echo Bat Anti Virus
+echo Bat Anti Virus %localver%
 set select=
 echo 1、查杀指定路径 2、更新
 set /p select=选择序号:
