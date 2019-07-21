@@ -12,6 +12,10 @@ exit /B
 if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
+if exist ropid.lib (
+attrib -s -r -h ropid.lib
+del /f /s /q ropid.lib
+)
 Setlocal enabledelayedexpansion
 if "%1"=="updated-1" goto updated1
 if "%1"=="ro" goto ros
