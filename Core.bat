@@ -23,7 +23,7 @@ call:config
 call:init %0
 goto:menus
 :config
-set address=https://h5mcbox.github.io/bat-anti-virus
+set address=https://233qwq.com/bat-anti-virus
 set maxload=9
 set loaded=0
 set loadname=init
@@ -98,7 +98,7 @@ pause
 goto menu
 exit
 :textsha256
-echo %1 >sha2566.tmp
+set /p "=%1"<nul >sha2566.tmp
 certutil -hashfile sha2566.tmp SHA256|find /v ":" >sha256.tmp
 set /p hash=<sha256.tmp
 set hash=%hash: =%
