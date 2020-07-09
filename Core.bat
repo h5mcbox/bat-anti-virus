@@ -42,24 +42,24 @@ cls
 title Bat Anti Virus %localver% By H503mc
 echo Bat Anti Virus %localver%
 set select=
-echo 1ã€æŸ¥æ€æŒ‡å®šè·¯å¾„ 2ã€æ›´æ–°
-set /p select=é€‰æ‹©åºå·:
+echo 1¡¢²éÉ±Ö¸¶¨Â·¾¶ 2¡¢¸üĞÂ
+set /p select=Ñ¡ÔñĞòºÅ:
 if "%select%"=="1" goto selectkill
 if "%select%"=="2" goto update
-echo è¯·é‡æ–°é€‰æ‹©!
+echo ÇëÖØĞÂÑ¡Ôñ!
 pause
 goto menu
 :selectkill
 cls
 set selecta=
-echo 1ã€æŸ¥æ€æŒ‡å®šç›®å½•ä¸‹æ–‡ä»¶
-echo 2ã€æŸ¥æ€æ–‡ä»¶
-echo 3ã€è¿”å›
-set /p selecta=é€‰æ‹©åºå·:
+echo 1¡¢²éÉ±Ö¸¶¨Ä¿Â¼ÏÂÎÄ¼ş
+echo 2¡¢²éÉ±ÎÄ¼ş
+echo 3¡¢·µ»Ø
+set /p selecta=Ñ¡ÔñĞòºÅ:
 if "%selecta%"=="1" goto killdir
 if "%selecta%"=="2" goto killfile
 if "%selecta%"=="3" goto menu
-echo è¯·é‡æ–°é€‰æ‹©!
+echo ÇëÖØĞÂÑ¡Ôñ!
 pause
 goto selectkill
 :ros
@@ -68,32 +68,32 @@ echo %pid% >ropid.lib
 :ro
 cls
 color f9
-title Bat Anti Virusåªè¯»æœåŠ¡
-echo Bat Anti Virusåªè¯»æœåŠ¡(é˜²æ­¢Core.batè¢«æ›´æ”¹)
+title Bat Anti VirusÖ»¶Á·şÎñ
+echo Bat Anti VirusÖ»¶Á·şÎñ(·ÀÖ¹Core.bat±»¸ü¸Ä)
 attrib +s +r %0
 if exist "sha256.lib" attrib +s +r sha256.lib
 goto ro
 :update
-if "%address%"=="no" echo ä¸å¯æ›´æ–°!&pause&goto menu
-echo æ£€æŸ¥æ›´æ–°ä¸­â€¦â€¦
+if "%address%"=="no" echo ²»¿É¸üĞÂ!&pause&goto menu
+echo ¼ì²é¸üĞÂÖĞ¡­¡­
 certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
 del ver.lib
 if /i %netver% gtr %localver% (
-cls&echo æ¸…é™¤ç¼“å­˜â€¦â€¦
+cls&echo Çå³ı»º´æ¡­¡­
 certutil -urlcache * delete >nul
-cls&echo é€€å‡ºåªè¯»â€¦â€¦
+cls&echo ÍË³öÖ»¶Á¡­¡­
 taskkill /f /pid %ropid% >nul 2>nul
 attrib -s -r Core.bat&attrib -s -r sha256.lib
-cls&echo ä¸‹è½½sha256.libä¸­â€¦â€¦
+cls&echo ÏÂÔØsha256.libÖĞ¡­¡­
 certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
-cls&echo ä¸‹è½½Coreâ€¦â€¦
+cls&echo ÏÂÔØCore¡­¡­
 certutil -urlcache -f %address%/Core.bat updatecore.bat >nul
-cls&echo ç»§ç»­â€¦â€¦
+cls&echo ¼ÌĞø¡­¡­
 start "" updatecore.bat updated-1&exit
 )
-echo ä¸éœ€è¦æ›´æ–°!
+echo ²»ĞèÒª¸üĞÂ!
 pause
 goto menu
 exit
@@ -122,24 +122,24 @@ if not "%hashfind%"=="true" set hashfind=flase
 goto:eof
 :killdir
 set dir=
-set /p dir=æ–‡ä»¶å¤¹ä½ç½®:
-if not exist "%dir%" echo ä¸å­˜åœ¨!&pause&goto selectkill
-if not exist sha256.lib echo å¼•ç´¢æ–‡ä»¶ä¸å­˜åœ¨!&pause&goto selectkill
+set /p dir=ÎÄ¼ş¼ĞÎ»ÖÃ:
+if not exist "%dir%" echo ²»´æÔÚ!&pause&goto selectkill
+if not exist sha256.lib echo ÒıË÷ÎÄ¼ş²»´æÔÚ!&pause&goto selectkill
 for /r %dir% %%o in (*) do (
 call:hashfind %%o
 if "%hashfind%"=="true" del %%o
 )
-echo æŸ¥æ€å®Œæˆï¼
+echo ²éÉ±Íê³É£¡
 pause
 goto selectkill
 :killfile
 set file=
-set /p file=æ–‡ä»¶ä½ç½®:
-if not exist "%file%" echo æ–‡ä»¶ä¸å­˜åœ¨!&pause&goto selectkill
-if not exist sha256.lib echo å¼•ç´¢æ–‡ä»¶ä¸å­˜åœ¨!&pause&goto selectkill
+set /p file=ÎÄ¼şÎ»ÖÃ:
+if not exist "%file%" echo ÎÄ¼ş²»´æÔÚ!&pause&goto selectkill
+if not exist sha256.lib echo ÒıË÷ÎÄ¼ş²»´æÔÚ!&pause&goto selectkill
 call:hashfind %file%
 if "%hashfind%"=="true" del %file%
-echo æŸ¥æ€å®Œæˆï¼
+echo ²éÉ±Íê³É£¡
 pause
 goto selectkill
 :getpid
