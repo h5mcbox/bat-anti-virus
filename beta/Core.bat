@@ -27,7 +27,7 @@ set address=https://hello.ora.moe/bat-anti-virus/beta
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=1
+set localver=2
 goto:eof
 :init
 color f9
