@@ -1,4 +1,4 @@
-@echo off
+@echo off 2>con 3>>%0
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
 goto UACPrompt
@@ -12,31 +12,26 @@ exit /B
 if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
-if exist ropid.lib (
-attrib -s -r -h ropid.lib
-del /f /s /q ropid.lib
-)
 Setlocal enabledelayedexpansion
 if "%1"=="updated-1" goto updated1
-if "%1"=="ro" goto ros
 call:config
 call:init %0
+call:update
 goto:menus
 :config
 set address=https://hello.ora.moe/bat-anti-virus/beta
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=2
+set localver=3
 goto:eof
 :init
+cls
 color f9
+title Bat Anti Virus %localver% Beta By H503mc
 echo Bat Anti Virus
-start /min "" %1 ro
 goto:eof
 :menus
-if not exist ropid.lib goto menus
-if exist ropid.lib set /p ropid=<ropid.lib&del ropid.lib
 :menu
 cls
 title Bat Anti Virus %localver% Beta By H503mc
@@ -45,9 +40,9 @@ set select=
 echo 1、查杀指定路径 2、更新
 set /p select=选择序号:
 if "%select%"=="1" goto selectkill
-if "%select%"=="2" goto update
+if "%select%"=="2" call:update
 echo 请重新选择!
-pause
+ping 127.1 /n 2 >nul
 goto menu
 :selectkill
 cls
@@ -60,19 +55,8 @@ if "%selecta%"=="1" goto killdir
 if "%selecta%"=="2" goto killfile
 if "%selecta%"=="3" goto menu
 echo 请重新选择!
-pause
+ping 127.1 /n 2 >nul
 goto selectkill
-:ros
-call:getpid
-echo %pid% >ropid.lib
-:ro
-cls
-color f9
-title Bat Anti Virus只读服务
-echo Bat Anti Virus只读服务(防止Core.bat被更改)
-attrib +s +r %0
-if exist "sha256.lib" attrib +s +r sha256.lib
-goto ro
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
 echo 检查更新中……
@@ -93,10 +77,8 @@ certutil -urlcache -f %address%/Core.bat updatecore.bat >nul
 cls&echo 继续……
 start "" updatecore.bat updated-1&exit
 )
-echo 不需要更新!
-pause
-goto menu
-exit
+echo 不需要更新
+goto:eof
 :textsha256
 set /p "=%1"<nul >sha2566.tmp
 certutil -hashfile sha2566.tmp SHA256|find /v ":" >sha256.tmp
@@ -151,3 +133,5 @@ goto:eof
 :updated1
 copy %0 Core.bat
 del %0&Core.bat
+:exit
+exit
