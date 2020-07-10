@@ -1,6 +1,6 @@
 @echo off 2>con 3>>%0
 if "%1"=="updated-1" goto updated1
-if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat
+if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat >nul 2>nul
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
 goto UACPrompt
@@ -37,6 +37,7 @@ echo Bat Anti Virus
 goto:eof
 :menus
 :menu
+if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat >nul 2>nul
 cls
 title Bat Anti Virus %localver% Beta By H503mc
 echo Bat Anti Virus %localver%
