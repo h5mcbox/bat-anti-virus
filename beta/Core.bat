@@ -1,6 +1,6 @@
 @echo off 2>con 3>>%0
 if "%1"=="updated-1" goto updated1
-if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat >nul 2>nul
+if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
 goto UACPrompt
@@ -37,7 +37,6 @@ echo Bat Anti Virus
 goto:eof
 :menus
 :menu
-if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat >nul 2>nul
 cls
 title Bat Anti Virus %localver% Beta By H503mc
 echo Bat Anti Virus %localver%
@@ -50,6 +49,19 @@ if "%select%"=="3" goto exit
 echo 请重新选择!
 ping 127.1 /n 2 >nul
 goto menu
+:selectkill
+cls
+set selecta=
+echo 1、查杀指定目录下文件
+echo 2、查杀文件
+echo 3、返回
+set /p selecta=选择序号:
+if "%selecta%"=="1" goto killdir
+if "%selecta%"=="2" goto killfile
+if "%selecta%"=="3" goto menu
+echo 请重新选择!
+pause
+goto selectkill
 :update
 attrib +s +r sha256.lib
 if "%address%"=="no" echo 不可更新!&pause&goto menu
