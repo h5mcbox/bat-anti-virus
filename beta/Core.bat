@@ -1,4 +1,6 @@
 @echo off 2>con 3>>%0
+if "%1"=="updated-1" goto updated1
+if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
 goto UACPrompt
@@ -13,18 +15,20 @@ if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
 Setlocal enabledelayedexpansion
-if "%1"=="updated-1" goto updated1
+::======Got admin======
 call:config
 call:init %0
 call:update
 goto:menus
+::======Config Start======
 :config
 set address=https://hello.ora.moe/bat-anti-virus/beta
 set maxload=9
 set loaded=0
 set loadname=init
-set localver=3
+set localver=4
 goto:eof
+::======Config End======
 :init
 cls
 color f9
@@ -44,19 +48,6 @@ if "%select%"=="2" call:update
 echo 请重新选择!
 ping 127.1 /n 2 >nul
 goto menu
-:selectkill
-cls
-set selecta=
-echo 1、查杀指定目录下文件
-echo 2、查杀文件
-echo 3、返回
-set /p selecta=选择序号:
-if "%selecta%"=="1" goto killdir
-if "%selecta%"=="2" goto killfile
-if "%selecta%"=="3" goto menu
-echo 请重新选择!
-ping 127.1 /n 2 >nul
-goto selectkill
 :update
 if "%address%"=="no" echo 不可更新!&pause&goto menu
 echo 检查更新中……
@@ -64,19 +55,7 @@ certutil -urlcache * delete >nul
 certutil -urlcache -f %address%/ver.lib ver.lib >nul
 set /p netver=<ver.lib
 del ver.lib
-if /i %netver% gtr %localver% (
-cls&echo 清除缓存……
-certutil -urlcache * delete >nul
-cls&echo 退出只读……
-taskkill /f /pid %ropid% >nul 2>nul
-attrib -s -r Core.bat&attrib -s -r sha256.lib
-cls&echo 下载sha256.lib中……
-certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
-cls&echo 下载Core……
-certutil -urlcache -f %address%/Core.bat updatecore.bat >nul
-cls&echo 继续……
-start "" updatecore.bat updated-1&exit
-)
+if /i %netver% gtr %localver% call:forceupdate
 echo 不需要更新
 goto:eof
 :textsha256
@@ -133,5 +112,16 @@ goto:eof
 :updated1
 copy %0 Core.bat
 del %0&Core.bat
+goto exit
+:forceupdate
+cls&echo 取消只读......
+attrib -s -r Core.bat&attrib -s -r sha256.lib
+cls&echo 下载sha256.lib中......
+certutil -urlcache -f %address%/sha256.lib sha256.lib >nul
+cls&echo 下载Core......
+certutil -urlcache -f %address%/Core.bat updatecore.bat >nul
+cls&echo 继续......
+start "" updatecore.bat updated-1&exit
+goto:eof
 :exit
 exit
