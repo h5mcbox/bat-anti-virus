@@ -41,10 +41,11 @@ cls
 title Bat Anti Virus %localver% Beta By H503mc
 echo Bat Anti Virus %localver%
 set select=
-echo 1、查杀指定路径 2、更新
+echo 1、查杀指定路径 2、更新 3、退出
 set /p select=选择序号:
 if "%select%"=="1" goto selectkill
 if "%select%"=="2" call:update
+if "%select%"=="3" goto exit
 echo 请重新选择!
 ping 127.1 /n 2 >nul
 goto menu
