@@ -18,7 +18,7 @@ Setlocal enabledelayedexpansion
 ::======Got admin======
 call:config
 call:init %0
-call:update
+call:forceupdate
 goto:menus
 ::======Config Start======
 :config
@@ -50,7 +50,7 @@ echo 请重新选择!
 ping 127.1 /n 2 >nul
 goto menu
 :update
-attrib +s +r Core.bat&attrib +s +r sha256.lib
+attrib +s +r sha256.lib
 if "%address%"=="no" echo 不可更新!&pause&goto menu
 echo 检查更新中……
 certutil -urlcache * delete >nul
@@ -116,7 +116,6 @@ copy %0 Core.bat
 del %0&Core.bat
 goto exit
 :forceupdate
-attrib +s +r Core.bat&attrib +s +r sha256.lib
 cls&echo 取消只读......
 attrib -s -r Core.bat&attrib -s -r sha256.lib
 cls&echo 下载sha256.lib中......
@@ -127,5 +126,5 @@ cls&echo 继续......
 start "" updatecore.bat updated-1&exit
 goto:eof
 :exit
-attrib +s +r Core.bat&attrib +s +r sha256.lib
+attrib +s +r sha256.lib
 exit
