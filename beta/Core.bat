@@ -27,6 +27,7 @@ set maxload=9
 set loaded=0
 set loadname=init
 set localver=4
+if not defined localver set localver=0
 goto:eof
 ::======Config End======
 :init
