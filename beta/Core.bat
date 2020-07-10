@@ -128,7 +128,7 @@ set pid=%_string:~16%
 goto:eof
 :updated1
 copy %0 Core.bat
-del %0&start "" Core.bat&exit
+start "" Core.bat
 goto exit
 :forceupdate
 cls&echo È¡ÏûÖ»¶Á......
