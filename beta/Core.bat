@@ -18,7 +18,7 @@ Setlocal enabledelayedexpansion
 ::======Got admin======
 call:config
 call:init %0
-call:forceupdate
+call:update
 goto:menus
 ::======Config Start======
 :config
