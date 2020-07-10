@@ -39,7 +39,7 @@ if not exist ropid.lib goto menus
 if exist ropid.lib set /p ropid=<ropid.lib&del ropid.lib
 :menu
 cls
-title Bat Anti Virus %localver% By H503mc
+title Bat Anti Virus %localver% Beta By H503mc
 echo Bat Anti Virus %localver%
 set select=
 echo 1、查杀指定路径 2、更新
