@@ -1,4 +1,5 @@
 @echo off 2>con 3>>%0
+color f9
 if "%1"=="updated-1" goto updated1
 if not "%~nx0"=="updatecore.bat" if exist updatecore.bat del updatecore.bat
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
@@ -127,7 +128,7 @@ set pid=%_string:~16%
 goto:eof
 :updated1
 copy %0 Core.bat
-del %0&Core.bat
+del %0&start "" Core.bat&exit
 goto exit
 :forceupdate
 cls&echo È¡ÏûÖ»¶Á......
